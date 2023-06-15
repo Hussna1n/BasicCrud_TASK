@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+    api:
+        build:
+          context: ./Backend
+          dockerfile: Dockerfile
+        ports:
+          - "6000:80"
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:80/api/Report"]
+          interval: 10s
+          timeout: 10s
+          retries: 3
+          start_period: 10s
+    frontend:
+        build:
+          context: ./Frontend
+          dockerfile: Dockerfile
+        ports:
+          - "4400:4400"
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:4400"]
+          interval: 10s
+          timeout: 10s
+          retries: 3
+          start_period: 10s
